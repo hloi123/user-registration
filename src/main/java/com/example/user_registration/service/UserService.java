@@ -1,14 +1,16 @@
 package com.example.user_registration.service;
 
 import com.example.user_registration.dto.UserDto;
-import com.example.user_registration.entity.User;
+import org.springframework.validation.BindingResult;
 
 public interface UserService {
     void createUser(UserDto userDto);
 
-    User findUserByEmail(String email);
+    UserDto findUserByEmail(String email);
 
     UserDto findUserById(Long userId);
 
     void updateUser(UserDto updatedUserDto, Long userId);
+
+    void validateUserDto(Long id, UserDto userDto, BindingResult result);
 }

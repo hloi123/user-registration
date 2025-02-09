@@ -9,10 +9,8 @@
 
 <body>
     <div th:replace="~{common/nav :: nav-bar}"></div>
-    <br />
-    <br />
-    <br />
-    <div class="container">
+
+    <div class="container mt-5">
         <div class="card">
             <div th:if="${param.success}">
                 <div class="alert alert-info">You've successfully updated.
@@ -22,8 +20,7 @@
                 <h2 class="text-center">Edit User</h2>
             </div>
             <div class="card-body">
-                <form method="post" role="form" th:action="@{/edit/{userId}(userId=${user.id})}"
-                    th:object="${user}">
+                <form method="post" role="form" th:action="@{/user/edit/{userId}(userId=${user.id})}" th:object="${user}">
                     <div th:replace="~{common/userForm :: login-form}"></div>
                     <div class="form-group mb-3">
                         <button class="btn btn-primary" type="submit">Update</button>

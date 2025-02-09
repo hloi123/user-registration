@@ -3,8 +3,8 @@
         <div class="col-md-6">
             <div class="form-group mb-3">
                 <label class="form-label">First Name</label>
-                <input class="form-control" id="firstName" name="firstName"
-                    placeholder="Enter first name" th:field="*{firstName}" type="text" required />
+                <input class="form-control" id="firstName" name="firstName" placeholder="Enter first name"
+                       th:field="*{firstName}" type="text" required />
                 <p th:errors="*{firstName}" class="text-danger"
                     th:if="${#fields.hasErrors('firstName')}">
                 </p>
@@ -14,7 +14,7 @@
             <div class="form-group mb-3">
                 <label class="form-label">Last Name</label>
                 <input class="form-control" id="lastName" name="lastName" placeholder="Enter last name"
-                    th:field="*{lastName}" type="text" required />
+                       th:field="*{lastName}" type="text" required />
                 <p th:errors="*{lastName}" class="text-danger" th:if="${#fields.hasErrors('lastName')}">
                 </p>
             </div>
@@ -26,7 +26,7 @@
             <div class="form-group mb-3">
                 <label class="form-label">Email</label>
                 <input class="form-control" id="email" name="email" placeholder="Enter email address"
-                    th:field="*{email}" type="email" />
+                       th:field="*{email}" type="email" required/>
                 <p th:errors="*{email}" class="text-danger" th:if="${#fields.hasErrors('email')}">
                 </p>
             </div>
@@ -34,8 +34,8 @@
         <div class="col-md-6">
             <div class="form-group mb-3">
                 <label class="form-label">Date Of Birth</label>
-                <input class="form-control" id="dateOfBirth" name="dateOfBirth"
-                    placeholder="Enter your date of birth" th:field="*{dateOfBirth}" type="date" required />
+                <input class="form-control" id="dateOfBirth" name="dateOfBirth" placeholder="Enter your date of birth"
+                       th:field="*{dateOfBirth}" type="date"/>
                 <p th:errors="*{dateOfBirth}" class="text-danger" th:if="${#fields.hasErrors('dateOfBirth')}">
                 </p>
             </div>
@@ -47,7 +47,7 @@
             <div class="form-group mb-3">
                 <label class="form-label">Password</label>
                 <input class="form-control" id="password" name="password" placeholder="Enter password"
-                    th:field="*{password}" type="password" />
+                    th:field="*{password}" type="password"/>
                 <p th:errors="*{password}" class="text-danger" th:if="${#fields.hasErrors('password')}">
                 </p>
             </div>

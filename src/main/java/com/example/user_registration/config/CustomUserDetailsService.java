@@ -4,6 +4,8 @@ package com.example.user_registration.config;
 import com.example.user_registration.entity.Role;
 import com.example.user_registration.entity.User;
 import com.example.user_registration.repository.UserRepository;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,13 +17,11 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
+@Slf4j
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private UserRepository userRepository;
-
-    public CustomUserDetailsService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private final UserRepository userRepository;
 
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email);
@@ -31,7 +31,8 @@ public class CustomUserDetailsService implements UserDetailsService {
                     user.getPassword(),
                     mapRolesToAuthorities(user.getRoles()));
         } else {
-            throw new UsernameNotFoundException("Invalid username or password.");
+            log.error("Login email is not found ={}", email);
+            throw new UsernameNotFoundException("Invalid Email or Password.");
         }
     }
 
@@ -42,4 +43,4 @@ public class CustomUserDetailsService implements UserDetailsService {
         return mapRoles;
     }
 }
-	
+

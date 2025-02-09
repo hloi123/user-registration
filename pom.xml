@@ -12,7 +12,6 @@
 	<artifactId>user-registration</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>user-registration</name>
-	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
 		<license/>

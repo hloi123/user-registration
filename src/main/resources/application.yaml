@@ -1,0 +1,13 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: ${DBMS_CONNECTION:jdbc:mysql://localhost:3306/user_registration_db}
+    driverClassName: "com.mysql.cj.jdbc.Driver"
+    username: ${DBMS_USERNAME:root}
+    password: ${DBMS_PASSWORD:root}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
