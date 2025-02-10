@@ -8,8 +8,6 @@ public interface UserService {
 
     UserDto findUserByEmail(String email);
 
-    UserDto findUserById(Long userId);
-
     void updateUser(UserDto updatedUserDto, Long userId);
 
     void validateUserDto(Long id, UserDto userDto, BindingResult result);

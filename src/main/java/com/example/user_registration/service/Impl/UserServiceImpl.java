@@ -48,12 +48,6 @@ public class UserServiceImpl implements UserService {
         return !Objects.isNull(user) ? mapToUserDto(user) : null;
     }
 
-    public UserDto findUserById(Long userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new EntityNotFoundException("User not found"));
-        return mapToUserDto(user);
-    }
-
     public void updateUser(UserDto updatedUserDto, Long userId) {
         User existingUser = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));

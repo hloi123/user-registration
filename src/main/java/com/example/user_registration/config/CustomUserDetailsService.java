@@ -31,7 +31,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                     user.getPassword(),
                     mapRolesToAuthorities(user.getRoles()));
         } else {
-            log.error("Login email is not found ={}", email);
+            log.error("Login email is invalid={}", email);
             throw new UsernameNotFoundException("Invalid Email or Password.");
         }
     }

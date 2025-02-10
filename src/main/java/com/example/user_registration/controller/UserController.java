@@ -1,12 +1,10 @@
 package com.example.user_registration.controller;
 
 import com.example.user_registration.dto.UserDto;
-import com.example.user_registration.entity.User;
 import com.example.user_registration.service.UserService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -42,20 +40,14 @@ public class UserController {
         return "edit";
     }
 
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') and #updatedUserDto.email == authentication.name")
     @PostMapping("/user/edit/{id}")
     public String updateUser(
             @Valid @ModelAttribute("user") UserDto updatedUserDto,
             BindingResult result,
             @PathVariable Long id,
             Model model) {
-        String authenticatedUsername = SecurityContextHolder.getContext().getAuthentication().getName();
-        UserDto user = userService.findUserById(id);
 
-        if (!authenticatedUsername.equals(user.getEmail())) {
-            log.error("Request update is invalid, username= {}, updatedUserDto={}", authenticatedUsername, updatedUserDto);
-            throw new AccessDeniedException("Insufficient permission to update this user.");
-        }
         userService.validateUserDto(id, updatedUserDto, result);
 
         if (result.hasErrors()) {

@@ -2,15 +2,15 @@ package com.example.user_registration.controller;
 
 
 import com.example.user_registration.dto.UserDto;
-import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.Objects;
+
 @Controller
-@AllArgsConstructor
 public class AuthController {
 
     @GetMapping("/")
@@ -21,7 +21,8 @@ public class AuthController {
     @GetMapping("/login")
     public String loginForm() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.isAuthenticated()
+        if (!Objects.isNull(authentication)
+                && authentication.isAuthenticated()
                 && !"anonymousUser".equals(authentication.getPrincipal())) {
             return "redirect:/user";
         }
@@ -33,7 +34,7 @@ public class AuthController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDto user = new UserDto();
         model.addAttribute("user", user);
-        if (authentication != null
+        if (!Objects.isNull(authentication)
                 && authentication.isAuthenticated()
                 && !"anonymousUser".equals(authentication.getPrincipal())) {
             return "redirect:/user";
