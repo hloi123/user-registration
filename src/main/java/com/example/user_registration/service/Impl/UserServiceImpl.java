@@ -6,6 +6,7 @@ import com.example.user_registration.entity.User;
 import com.example.user_registration.repository.RoleRepository;
 import com.example.user_registration.repository.UserRepository;
 import com.example.user_registration.service.UserService;
+import io.micrometer.common.util.StringUtils;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -53,12 +54,10 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
         existingUser.setFirstName(updatedUserDto.getFirstName());
         existingUser.setLastName(updatedUserDto.getLastName());
-        if (!updatedUserDto.getPassword().isEmpty()) {
+        LocalDate date = LocalDate.parse(updatedUserDto.getDateOfBirth(), DateTimeFormatter.ofPattern(ISO_DATE_FORMAT));
+        existingUser.setDateOfBirth(date);
+        if (!StringUtils.isEmpty(updatedUserDto.getPassword())) {
             existingUser.setPassword(passwordEncoder.encode(updatedUserDto.getPassword()));
-        }
-        if (!updatedUserDto.getDateOfBirth().isEmpty()) {
-            LocalDate date = LocalDate.parse(updatedUserDto.getDateOfBirth(), DateTimeFormatter.ofPattern(ISO_DATE_FORMAT));
-            existingUser.setDateOfBirth(date);
         }
         userRepository.save(existingUser);
     }
@@ -90,13 +89,13 @@ public class UserServiceImpl implements UserService {
      */
     public void validateUserDto(Long id, UserDto userDto, BindingResult result) {
         // check password not empty when register new user
-        if (Objects.isNull(id) && userDto.getPassword().isEmpty()) {
+        if (Objects.isNull(id) && StringUtils.isEmpty(userDto.getPassword())) {
             result.rejectValue("password", "validation.password.required"
-                    , "Password should not be empty.");
+                    , "Password is required.");
         }
 
         // check password length
-        if (!userDto.getPassword().isEmpty() && userDto.getPassword().length() < 6) {
+        if (!StringUtils.isEmpty(userDto.getPassword()) && userDto.getPassword().length() < 6) {
             result.rejectValue("password", "validation.password.min.length"
                     , "Password must be at least 6 characters.");
         }
@@ -104,15 +103,14 @@ public class UserServiceImpl implements UserService {
         // check user is existed
         if (Objects.isNull(id)) {
             UserDto existingUser = findUserByEmail(userDto.getEmail());
-
-            if (existingUser != null && existingUser.getEmail() != null && !existingUser.getEmail().isEmpty()) {
+            if (!Objects.isNull(existingUser) && !Objects.isNull(existingUser.getEmail())) {
                 result.rejectValue("email", "validation.email.existed"
                         , "Email already registered.");
             }
         }
 
-        // check dateOfbirth is in future
-        if (!userDto.getDateOfBirth().isEmpty()) {
+        // check dateOfbirth
+        if (StringUtils.isNotBlank(userDto.getDateOfBirth())) {
             LocalDate inputDate = LocalDate.parse(userDto.getDateOfBirth(), DateTimeFormatter.ofPattern(ISO_DATE_FORMAT));
             if (LocalDate.now().isBefore(inputDate)) {
                 result.rejectValue("dateOfBirth", "validation.dateOfBirth.futureDate"

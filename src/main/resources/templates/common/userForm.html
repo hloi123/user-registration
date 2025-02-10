@@ -35,7 +35,7 @@
             <div class="form-group mb-3">
                 <label class="form-label">Date Of Birth</label>
                 <input class="form-control" id="dateOfBirth" name="dateOfBirth" placeholder="Enter your date of birth"
-                       th:field="*{dateOfBirth}" type="date"/>
+                       th:field="*{dateOfBirth}" type="date" required/>
                 <p th:errors="*{dateOfBirth}" class="text-danger" th:if="${#fields.hasErrors('dateOfBirth')}">
                 </p>
             </div>

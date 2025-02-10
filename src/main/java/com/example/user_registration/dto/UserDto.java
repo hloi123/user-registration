@@ -2,7 +2,6 @@ package com.example.user_registration.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -16,19 +15,20 @@ import java.util.List;
 public class UserDto {
     private Long id;
 
-    @NotBlank(message = "First name should not be empty")
+    @NotBlank
     private String firstName;
 
-    @NotEmpty(message = "Last name should not be empty")
+    @NotBlank
     private String lastName;
 
-    @NotEmpty(message = "Email should not be empty")
+    @NotBlank
     @Email
     private String email;
 
-    @NotNull(message = "Password should not be empty")
+    @NotNull
     private String password;
 
+    @NotBlank
     private String dateOfBirth;
 
     private List<String> role;
